@@ -1,116 +1,57 @@
-作业:利用过渡动画transiton，封装一个抽屉的效果。
-
-
-
-1:课堂注意
-出现一些项目中的提问的问题：比如 OK    1
-                         比如：NO    2
-
-2：线上授课
-上课的时候如果收到社区人员通知做核酸，和老师说一声！
-有任何困难和老说说一声
-微信群+添加老师微信+学习问题及时与老师沟通
-每一天的上课视频，老师会上传百度网盘
-
-
-
-
-
-3)复习一下
-三级联动业务:
-3.1前面基础课程当中v-for很少使用index，以后在写项目的时候，index索引值切记加上
-3.2防抖与节流【面试经常出现】
-3.3vuex可以模块式开发
-vuex经常用的套路是state、mutations、actions、getters、modules
-
-
-
-1)搜索模块中的三级联动与过渡动画
-
-
-1.1在home模块当中，使用了一个功能三级联动功能---->[typeNav]
-1.2在search模块当中，也使用三级联动的功能------->[typeNav]
-1.3注意的事项
-注意1：以后在开发项目的时候，如果发现某一个组件在项目当中多个地方出现频繁的使用
+如果发现某一个组件在项目当中多个地方出现频繁的使用
 咱们经常把这类的组件注册为全局组件。
 注册全局组件的好处是什么那：只需要注册一次，可以在程序任意地方使用
-
-注意2:咱们经常把项目中共用的全局组件放置于components里面，以后需要注意，
-项目当中全局组件（共用的组件）一般放置于components文件夹中
-
-注意3：全局组件只需要注册一次，就可以在项目当中任意的地方使用，注册全局组件一般是在入口文件注册。
+全局组件放置于components里面
 
 
 
-2)组件name属性的作用?
-2.1开发者工具中可以看见组件的名字
-2.2注册全局组件的时候，可以通过组件实例获取相应组件的名字
+组件name属性的作用?
+1开发者工具中可以看见组件的名字
+2注册全局组件的时候，可以通过组件实例获取相应组件的名字
 
 
 
 
-3)TypeNav组件业务分析?
-3.1三级联动在home模块正常显示
-3.2三级联动在search一会显示、一会隐藏 ---解决方案：通过一个响应式属性控制三级联动显示与隐藏
-3.3开发的时候的出现问题：在home模块下不应该出现显示与隐藏的效果
-3.4现在这个问题【三级联动：本身在search模块应该有显示与隐藏的业务】 ，但是在home模块下不应该出现显示与隐藏的业务
-说白了：你需要让三级联动组件知道谁在用它。
-3.5:通过$route让组件区分在那个模块下
-以后在功的时候，如果出现某一个组件要区分当前在哪一个模块中【home、search】，通过$route路由信息区分
-3.6路由跳转的时候，相应的组件会把重新销毁与创建----【kepp-alive】
+三级联动组件知道谁在用它。
+    组件在哪一个模块中【home、search】，通过$route路由信息区分
+
+
+路由跳转的时候，相应的组件会把重新销毁与创建----【kepp-alive】
 
 
 
 
 
 4)过渡效果
-最早接触的时候:CSS3
 Vue当中也有过渡动画效果---transition内置组件完成
-4.1:注意1,在Vue当中，你可以给 （某一个节点）|（某一个组件）添加过渡动画效果
-但是需要注意，节点|组件务必出现v-if|v-show指令才可以使用。
+节点|组件务必出现v-if|v-show指令才可以使用。
 
 
 
 
 5)TypeNav三级联动性能优化?
-项目：home切换到search或者search切换到home，你会发现一件事情，组件在频繁的向服务器发请求，
-获取三级联动的数据进行展示。
 
-项目中如果频繁的向服务器发请求，很好性能的，因此咱们需要进行优化。
+频繁地向服务器发请求，因此咱们需要进行优化。
 
+为什么?
+dispatch发送请求写在TypeNav中的mounted,
+频繁地加载TypeNav加载就会频繁触发dispatch发送请求
 
-5.1为什么会频繁的向服务器发请求获取三级联动的数据那?
-
-因为路由跳转的时候，组件会进行销毁的【home组件的created：在向vuex派发action，因此频繁的获取三级联动的数据】
-只需要发一次请求，获取到三级联动的数据即可，不需要多次。
-最终解决方案：在App.
+最终解决方案：dispatch写在App.
 
 
 
-5.2:项目性能优化手段有哪些？
-v-if|v-show选择
-按需加载          lodash、ant
-防抖与节流
-请求次数优化
+如果页面中本来就存在params
+ location.params = this.$route.params;
+      
 
 
 
 
-6)开发listContainer|Floor组件业务？
-接下来需要开发listContainer与floor组件
-场景:开发项目，产品经理画出原型，前端与后端人员需要介入（开发项目），
-leader（老大）刚开完会，前端与后端负责哪些模块，后端人员（....开发服务器），
-前端人员【项目起步、开发静态页面、查分静态组件】，回首一看回台‘哥哥’，接口没有写好，
-向这种情况，前端人员可以mock一些数据【前端程序员自己模拟的一些假的接口】，当中工作中项目上线，需要把mock
-数据变为后台哥哥给的接口数据替换。
 
 
-6.1mock数据。
-注意：因为后台老师没有给我们写好其他接口【老师们特意的：因为就是想练习mock数据】
-但是项目中mock数据，你就把他当中真实接口数据用就行。
+mock数据。
 
-注意：mock（模拟数据）数据需要使用到mockjs模块，可以帮助我们模拟数据。
-注意：mockjs【并非mock.js mock-js】
 http://mockjs.com/  官方地址
 
 mock官网一句话：晚上练习的时候，如果网速可以，看看mock的官网，看看语法规则；
@@ -137,50 +78,64 @@ mock官网当中这句话的理解：
 ]
 
 第四步：在mock文件夹中创建一个server.js文件
-注意：在server.js文件当中对于banner.json||floor.json的数据没有暴露，但是可以在server模块中使用。
+
+import Mock from 'mockjs';
+//webpack默认对外暴露的：图片、JSON数据格式
+import banner from './banner.json';
+import floor from './floor.json';
+
+Mock.mock("/mock/banner",{code:200,data:banner});
+Mock.mock("/mock/floor",{code:200,data:floor});
 对于webpack当中一些模块：图片、json，不需要对外暴露，因为默认就是对外暴露。
 
+回到入口文件，引入serve.js
 
-第五步:通过mock模块模拟出数据
-
-通过Mock.mock方法进行模拟数据
-
-
-第六步:回到入口文件，引入serve.js
-mock需要的数据|相关mock代码页书写完毕，关于mock当中serve.js需要执行一次，
-如果不执行，和你没有书写一样的。
-
-
-
-第七步:在API文件夹中创建mockRequest【axios实例：baseURL:'/mock'】
+在API文件夹中创建mockRequest【axios实例：baseURL:'/mock'】
 专门获取模拟数据用的axios实例。
 
-在开发项目的时候：切记，单元测试，某一个功能完毕，一定要测试是否OK
 
 
+8)swiper基本的使用
+main.js
+import "swiper/css/swiper.css";
+
+Carousel/index.vue
+import Swiper from "swiper";
+  <div class="swiper-container" ref="cur">
+    <div class="swiper-wrapper">
+      <div
+        class="swiper-slide"
+        v-for="(carousel, index) in list"
+        :key="carousel.id"
+      >
+        <img :src="carousel.imgUrl" />
+      </div>
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination"></div>
+
+    <!-- 如果需要导航按钮 -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
 
 
-7）存储数据，存储于vuex
-7.1:书写静态页面
-7.2：拆分组件
-7.3：获取服务器数据
-7.4：展示数据
-7.5：开发动态业务
-
-
-
-
-8)swiper基本的使用？
-
-8.1:swiper可以在移动端使用？还是PC端使用？
-答：swiper移动端可以使用，pc端也可以使用。
-
-8.2:swiper常用于哪些场景？
-常用的场景即为轮播图----【carousel:轮播图】
-swiper最新版本为7版本的，项目当中使用的是5版本
-
-https://www.swiper.com.cn/ 官网地址
-
+      this.$nextTick(() => {
+          var mySwiper = new Swiper(this.$refs.cur, {
+            loop: true,
+            // 如果需要分页器
+            pagination: {
+              el: ".swiper-pagination",
+              //点击小球的时候也切换图片
+              clickable: true,
+            },
+            // 如果需要前进后退按钮
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+          });
+        });
 
 
 
