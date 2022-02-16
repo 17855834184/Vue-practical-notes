@@ -1,58 +1,27 @@
 
-2.3组件通信-----（工作使用频率非常高、面试的时候经常出现）
-父子:props、插槽、ref
-子父：自定义事件
-万能：vuex、$bus、pubsub
-
-经典面试题:数组去重[1,2,2,3,4,2];
-
-
-平台属性携带参数格式:
-props	 Array	 N	  商品属性的数组: ["属性ID:属性值:属性名"]   示例: ["2:6.0～6.24英寸:屏幕尺寸"]
-
-props:['属性的ID:属性值:属性名']
-
-
-
-
-
-
-3)完成排序业务
-num1:在基础课程当中曾经写过排序业务。
-
-num2:综合与价格按钮，点击谁，谁的背景颜色变为红色。（类名：active）
-谁有类这件事情，区分开综合与价格
-
-
-num3：将来点击综合||价格，还是需要给服务器发请求
-【价格升序：把这个信息给服务器传递过去，服务器接收到信息，数据库自动把排序这件事情做了，把排序做好的数据返回给你，你展示即可】
-
-
-
-
-order:服务器需要字段，代表的是排序方式
-order这个字段需要的是字符串（可以传递也可以不传递）
-1:代表综合
-2:代表价格
-3:asc代表升序
-4:desc代表降序
-告诉服务器排序方式有几种情况?
-"1:asc" "1:desc"  "2:asc"  "2:desc"
-
-
-num4:综合与价格箭头
-
 4.1箭头用什么去做【可以选用阿里图标库】  https://www.iconfont.cn/ 
 
-4.2对于综合|价格旁边的箭头【动态显示：时而又，时而没有】，带有类名active，拥有箭头
+//排序的操作
+    changeOrder(flag) {
+      //flag:用户每一次点击li标签的时候，用于区分是综合（1）还是价格（2）
+      //现获取order初始状态【咱们需要通过初始状态去判断接下来做什么】
+      let originOrder = this.searchParams.order;
+      let orginsFlag = originOrder.split(":")[0];
+      let originSort = originOrder.split(":")[1];
+      //新的排序方式
+      let newOrder = "";
+      //判断的是多次点击的是不是同一个按钮
+      if (flag == orginsFlag) {
+        newOrder = `${orginsFlag}:${originSort == "desc" ? "asc" : "desc"}`;
+      } else {
+        //点击不是同一个按钮
+        newOrder = `${flag}:${"desc"}`;
+      }
+      //需要给order重新赋值
+      this.searchParams.order = newOrder;
+      //再次发请求
+      this.getData();
+    },
 
-4.3:根据1、2区分谁有类名（背景）、谁有箭头
-    根据asc|desc区分它用哪一个箭头【上、下】
+前端必须学会轮播，分页，和日历
 
-
-
-
-
-5)分页功能。
-第三方插件:elementUI实现超级简单
-但是咱们需要自己封装。也属于前台项目当中比较重要的一部分。

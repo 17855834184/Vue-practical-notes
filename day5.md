@@ -15,7 +15,6 @@
 
 第三种方法 promise.then可以解决异步操作问题，或者async await 配合promise
 
-第四种解决方法 父组件获取数据，通过v-for遍历必须要完整的数据
 
 2数据更新之后不能马上获取dom
 组件实例的一个方法:$nextTick
