@@ -64,7 +64,7 @@ this.$route是存在页面上的，不是存在单个组件的，所以都能获
 
 
 9）路由传参
-params参数：路由需要占位 path:'/home/:keyword'
+params参数：路由需要占位 path:'/home/:keyword?'
 query参数
 
 路由传递参数先关面试题
