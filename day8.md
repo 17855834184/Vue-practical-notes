@@ -15,6 +15,3 @@ let router = new VueRouter({
     return { y: 0 };
   },
 });
-
-
-

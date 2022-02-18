@@ -113,22 +113,3 @@ module.exports = {
       categoryList: (state) => state.home.categoryList,
     }),
      
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
